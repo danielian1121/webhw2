@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="utf-8">
+		<script>
+			i = 0;
+			x = ["img/album_1/1.jpg","img/album_1/2.jpg","img/album_1/3.jpg","img/album_1/4.jpg","img/album_1/5.jpg","img/album_1/6.jpg","img/album_1/7.jpg",
+            "img/album_1/8.jpg","img/album_1/9.jpg","img/album_1/10.jpg","img/album_1/11.jpg","img/album_1/12.jpg","img/album_1/13.jpg","img/album_1/14.jpg",
+            "img/album_1/15.jpg","img/album_1/16.jpg","img/album_1/17.jpg","img/album_1/18.jpg","img/album_1/19.jpg","img/album_1/20.jpg"];
+            function f(y)
+			{
+                i = (i + y) % x.length;
+                if( i < 0){
+                    i = i + x.length;
+                }
+          			document.getElementById("demo").innerHTML = "<img src='" + x[i] + "' width='800px' height='450px' style='display:block; margin:auto;'>" ;
+                document.getElementById("download").href = x[i];
+                document.getElementById("download").download = x[i];
+			}
+            var myVar = setInterval(display, 3000);
+            is_autoplay = false;
+            function display()
+            {
+                if(is_autoplay){
+                    i = (i + 1) % x.length;
+                    document.getElementById("demo").innerHTML = "<img src='" + x[i] + "' width='800px' height='450px' style='display:block; margin:auto;'>" ;
+										document.getElementById("download").href = x[i];
+										document.getElementById("download").download = x[i];
+								}
+            }
+            function change(){
+                is_autoplay = !is_autoplay;
+                var button = document.getElementById("autoplay");
+                if(button.value == "Auto play")
+                    button.value = "Manually Play";
+                else
+                    button.value = "Auto play"
+            }
+		</script>
+	</head>
+
+<body>
+
+<div id="demo">
+	<img src='img/album_1/1.jpg' width='800px' height='450px' style='display:block; margin:auto;'>
+</div>
+<div style='text-align: center;'>
+    <a href="javascript:f(-1);">上一張</a>
+    |
+    <a href="javascript:f(1);">下一張</a>
+    |
+    <a href="img/album_1/1.jpg" download="img/album_1/1.jpg" id="download">下載此張圖片</a>
+    <br>
+    <a href="index.html">回到上一頁</a>
+    <br><br><br>
+    <input type="button" onclick="change()" id="autoplay" value="Auto play">
+    <br><br><br>
+    <audio src="res/1.mp3" id="audio" onchange="next()" controls autoplay></audio>
+    <br>
+    <button id="last">上一首</button>
+    <button id="next">下一首</button>
+    <script>
+        var btn1 = document.getElementById("last");
+        var btn2 = document.getElementById("next");
+        var music = document.getElementById("audio");
+        var musicarray = ["1","2","3"];
+        var num = 0;
+
+        btn1.onclick = function(){
+            num = (num -1)%3;
+            if(num<0)
+                num = num + musicarray.length;
+            music.src = "res/"+musicarray[num]+".mp3";
+            music.play();
+        }
+        btn2.onclick = function(){
+            num = (num +1)%3;
+            music.src = "res/"+musicarray[num]+".mp3";
+            music.play();
+        }
+        music.onended = function(){
+            num = (num +1)%3;
+            music.src = "res/"+musicarray[num]+".mp3";
+            music.play();
+        }
+    </script>
+</div>
+
+</body>
+</html>
